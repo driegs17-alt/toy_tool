@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// Anyone can look at the wall and add a sticker.
+// Nobody can edit or delete stickers from the site (you still can, in the Firebase console).
+// Every saved sticker has to be ten in-range numbers plus a short word.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function inRange(v, lo, hi) {
+      return v is int && v >= lo && v <= hi;
+    }
+
+    function validSticker(d) {
+      return d.keys().hasOnly(['shape', 'points', 'spike', 'turn', 'fill', 'pattern',
+                               'line', 'weight', 'eyes', 'mouth', 'word', 'createdAt'])
+        && d.keys().hasAll(['shape', 'points', 'spike', 'turn', 'fill', 'pattern',
+                            'line', 'weight', 'eyes', 'mouth', 'word', 'createdAt'])
+        && inRange(d.shape, 0, 5)
+        && inRange(d.points, 3, 12)
+        && inRange(d.spike, 0, 10)
+        && inRange(d.turn, 0, 23)
+        && inRange(d.fill, 0, 9)
+        && inRange(d.pattern, 0, 3)
+        && inRange(d.line, 0, 4)
+        && inRange(d.weight, 0, 3)
+        && inRange(d.eyes, 0, 5)
+        && inRange(d.mouth, 0, 5)
+        && d.word is string && d.word.size() <= 12
+        && d.createdAt == request.time;
+    }
+
+    match /stickers/{id} {
+      allow read: if true;
+      allow create: if validSticker(request.resource.data);
+      allow update, delete: if false;
+    }
+  }
+}

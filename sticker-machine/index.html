@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sticker Machine</title>
+  <meta name="description" content="Turn ten dials to make a sticker, then stick it on a wall everyone shares.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Mono:wght@400;500&family=Figtree:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 class="title">Sticker Machine</h1>
+    <p class="lede">Ten dials. <strong id="total">456,192,000</strong> possible stickers. Make one and stick it on the wall.</p>
+  </header>
+
+  <main class="studio">
+    <section class="bench" aria-label="Your sticker">
+      <div id="mat" class="mat"></div>
+      <div class="readout">
+        <span class="mono small">Sticker</span>
+        <strong id="number" class="mono num">#1</strong>
+        <span class="mono small">of <span id="total2">456,192,000</span></span>
+      </div>
+      <div class="actions">
+        <button id="shuffle" type="button" class="btn ghost">Shuffle</button>
+        <button id="save" type="button" class="btn primary">Stick it on the wall</button>
+      </div>
+      <p id="status" class="status" role="status"></p>
+    </section>
+
+    <form id="controls" class="controls" autocomplete="off" aria-label="Sticker dials">
+      <!-- dials are added by app.js from the lists in sticker.js -->
+    </form>
+  </main>
+
+  <section class="wall" aria-labelledby="wall-title">
+    <div class="wall-head">
+      <h2 id="wall-title">The Wall</h2>
+      <p id="wallCount" class="mono small">Loading…</p>
+    </div>
+    <p id="wallNote" class="note" hidden></p>
+    <ol id="wall" class="grid"></ol>
+    <p id="wallEmpty" class="empty" hidden>No stickers yet. Yours could be the first.</p>
+  </section>
+
+  <footer class="foot mono small">Made with p5.js. Tap any sticker on the wall to remix it.</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+  <script src="sticker.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
